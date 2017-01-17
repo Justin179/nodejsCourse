@@ -1,9 +1,6 @@
-var firstname = 'jane';
+// use require to get the module
+var greet = require('./greet');
 
-// function expression(在這裡面有獨立的scope)
-(function(){
-    var firstname = 'john';
-    console.log(firstname);
-})();
-
-console.log(firstname);
+// 拿到方法，呼叫方法
+greet.english();
+greet.spanish();

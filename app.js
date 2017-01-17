@@ -1,3 +1,11 @@
-var greet = require('./greet');
+var person = {
+    firstname: 'John',
+    lastname: 'Doe',
+    greet: function(){
+        console.log('Hello, '+this.firstname+" "+this.lastname);
+    }
+};
 
-greet(); 
+person.greet();
+
+console.log(person['firstname']);

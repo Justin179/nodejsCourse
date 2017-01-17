@@ -1,25 +1,16 @@
-// object properties and methods
-var obj = {
-    greet: 'hello'
-}
+var Emitter = require('./emitter');
 
-console.log(obj.greet);
-console.log(obj['greet']);
-var prop = 'greet';
-console.log(obj[prop]);
+var emtr = new Emitter();
 
-var arr = [];
-arr.push(function(){
-    console.log('hi 1');
-});
-arr.push(function(){
-    console.log('hi 2');
-});
-arr.push(function(){
-    console.log('hi 3');
+// 置放listeners that will response (把function放到greet property 陣列裡面)
+emtr.on('greet',function(){
+    console.log('A');
 });
 
-// item就是陣列中的每一個物件
-arr.forEach(function(item){
-    item();
+// (把function放到greet property 陣列裡面)
+emtr.on('greet',function(){
+    console.log('B');
 });
+
+// 發動xxx event(greet event in this case)，同時觸發多個listeners
+emtr.emit('greet');

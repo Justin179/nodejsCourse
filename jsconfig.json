@@ -1,0 +1,6 @@
+// 寫這個在寫es6獨有的功能時，才不會收到警示
+{
+    "compilerOptions": {
+        "target": "es6"
+    }
+}

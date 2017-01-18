@@ -5,7 +5,7 @@ var emtr = new Emitter();
 // 置放listeners that will response (把function放到greet property 陣列裡面)
 emtr.on('greet',function(){
     console.log('A');
-});
+}); 
 
 // (把function放到greet property 陣列裡面)
 emtr.on('greet',function(){

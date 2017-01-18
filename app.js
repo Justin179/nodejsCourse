@@ -1,10 +1,18 @@
-// take a string and convert it to binary data
-// the second param is character encoding
-var buffer = new Buffer('hello','utf-8');
-console.log(buffer);
-console.log(buffer.toString());
-console.log(buffer.toJSON());
-console.log(buffer[1]);
+// callback
+function greet(callback){
+    console.log('this is greet');
+    var data = {
+        name: 'john doe'
+    };
+    callback(data);
+}
 
-buffer.write('xx');
-console.log(buffer.toString());
+greet(function(data){
+    console.log('this is callback');
+    console.log(data);
+});
+
+greet(function(data){
+    console.log('this is second callback');
+    console.log(data.name);
+});

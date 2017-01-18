@@ -2,39 +2,26 @@
 
 // 以es6 改寫eventEmitter
 
+// javascript實現了import 其他類別
+var Greetr = require('./greetr.js');
 
-// require 'events' & 'util'
-var EventEmitter = require('events');
-var util = require('util');
+// 以下一整塊搬到module
+// -----------------------------------------
+// var EventEmitter = require('events');
 
-// create function constructor Greetr
-// function Greetr(){
-//     EventEmitter.call(this);
-//     this.greeting = "Hello world";
+// class Greetr extends EventEmitter {
+//     constructor(){
+//         super(); // 等同呼叫父類別的建構子EventEmitter.call(this);
+//         this.greeting = "Hello world";
+//     }
+
+//     greet(data){
+//         // console.log(this.greeting+': '+data); // hello world
+//         console.log(`${this.greeting}: ${data}`);
+//         this.emit('greet',data); // 因為繼承，Greetr有拿到emit方法
+//     }
 // }
-
-// Greetr extends EventEmitter
-// util.inherits(Greetr,EventEmitter);
-
-// 把function greet放到Greetr的prototype
-// Greetr.prototype.greet = function(data){ // pass data to all the listeners
-//     console.log(this.greeting+': '+data); // hello world
-//     this.emit('greet',data); // 因為繼承，Greetr有拿到emit方法
-// }
-
-class Greetr extends EventEmitter {
-    constructor(){
-        super(); // 等同呼叫父類別的建構子EventEmitter.call(this);
-        this.greeting = "Hello world";
-    }
-
-    greet(data){
-        // console.log(this.greeting+': '+data); // hello world
-        console.log(`${this.greeting}: ${data}`);
-        this.emit('greet',data); // 因為繼承，Greetr有拿到emit方法
-    }
-}
-
+// -----------------------------------------
 
 
 // 建立Greetr物件

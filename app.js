@@ -1,18 +1,21 @@
-// use nodejs' event emitter
-var Emitter = require('events');
-var eventConfig = require('./config').events;
+var person = {
+    firstname: '',
+    lastname: '',
+    greet: function(){
+        return this.firstname + ' '+this.lastname;
+    }
+}
 
-var emtr = new Emitter();
+// 創造一個物件，繼承自person object
+// create an empty object whose prototype is person
+var john = Object.create(person);
+john.firstname = 'john';
+john.lastname = 'doe';
 
-// 置放listeners that will response (把function放到greet property 陣列裡面)
-emtr.on(eventConfig.GREET,function(){
-    console.log('A-');
-}); 
+var jane = Object.create(person);
+jane.firstname = 'jane';
+jane.lastname = 'doe';
+// john & jane share
 
-// (把function放到greet property 陣列裡面)
-emtr.on(eventConfig.GREET,function(){
-    console.log('B-');
-});
-
-// 發動xxx event(greet event in this case)，同時觸發多個listeners
-emtr.emit(eventConfig.GREET);
+console.log(john.greet());
+console.log(jane.greet()); 

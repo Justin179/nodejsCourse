@@ -1,21 +1,38 @@
-var person = {
-    firstname: '',
-    lastname: '',
-    greet: function(){
-        return this.firstname + ' '+this.lastname;
-    }
+// require 'events' & 'util'
+var EventEmitter = require('events');
+var util = require('util');
+
+// create function constructor Greetr
+function Greetr(){
+    this.greeting = "Hello world";
 }
 
-// 創造一個物件，繼承自person object
-// create an empty object whose prototype is person
-var john = Object.create(person);
-john.firstname = 'john';
-john.lastname = 'doe';
+// Greetr extends EventEmitter
+util.inherits(Greetr,EventEmitter);
 
-var jane = Object.create(person);
-jane.firstname = 'jane';
-jane.lastname = 'doe';
-// john & jane share
+// 把function greet放到Greetr的prototype
+Greetr.prototype.greet = function(data){ // pass data to all the listeners
+    console.log(this.greeting+': '+data); // hello world
+    this.emit('greet',data); // 因為繼承，Greetr有拿到emit方法
+}
 
-console.log(john.greet());
-console.log(jane.greet()); 
+// 建立Greetr物件
+var greeter1 = new Greetr();
+// 把方法放進陣列
+greeter1.on('greet',function(data){
+    console.log('someone greeted: '+data);
+});
+
+// 建立Greetr物件
+var greeter2 = new Greetr();
+// 把方法放進陣列
+greeter2.on('greet',function(data){
+    console.log('greeter2 someone greeted: '+data);
+});
+
+// 從prototype拿到function greet
+greeter1.greet('Justin');
+// hello world (emit - event)
+// someone greeted (event listener)
+
+greeter2.greet('Hi there');

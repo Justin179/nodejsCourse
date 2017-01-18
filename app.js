@@ -1,40 +1,59 @@
 'use strict';
-// 改用es6 class語法，取代prototype
-// class 完全替代 function constructor
 
-// function constructor
-// function Person(firstname,lastname) {
-//     this.firstname = firstname;
-//     this.lastname = lastname;
+// 以es6 改寫eventEmitter
+
+
+// require 'events' & 'util'
+var EventEmitter = require('events');
+var util = require('util');
+
+// create function constructor Greetr
+// function Greetr(){
+//     EventEmitter.call(this);
+//     this.greeting = "Hello world";
 // }
 
-// class
-class Person {
-    constructor(firstname,lastname){
-        // this here is each object created
-        this.firstname = firstname;
-        this.lastname = lastname;
+// Greetr extends EventEmitter
+// util.inherits(Greetr,EventEmitter);
+
+// 把function greet放到Greetr的prototype
+// Greetr.prototype.greet = function(data){ // pass data to all the listeners
+//     console.log(this.greeting+': '+data); // hello world
+//     this.emit('greet',data); // 因為繼承，Greetr有拿到emit方法
+// }
+
+class Greetr extends EventEmitter {
+    constructor(){
+        super(); // 等同呼叫父類別的建構子EventEmitter.call(this);
+        this.greeting = "Hello world";
     }
 
-    // 此方法會自動會被放到prototype
-    greet(){
-        console.log(this.firstname+' '+this.lastname);    
+    greet(data){
+        // console.log(this.greeting+': '+data); // hello world
+        console.log(`${this.greeting}: ${data}`);
+        this.emit('greet',data); // 因為繼承，Greetr有拿到emit方法
     }
 }
 
-// adding method/function to the prototype(父類別)
-// Person.prototype.greet = function(){
-//     console.log(this.firstname+' '+this.lastname);
-// }
 
-// 創造一個物件，繼承自person object
-// create an empty object whose prototype is person
-var john = new Person('john','doe'); 
-john.greet();
 
-var jane = new Person('jane','doe');
-jane.greet();
+// 建立Greetr物件
+var greeter1 = new Greetr();
+// 把方法放進陣列
+greeter1.on('greet',function(data){
+    console.log('someone greeted: '+data);
+});
 
-console.log(john.__proto__);
-console.log(jane.__proto__);
-console.log(john.__proto__===jane.__proto__);
+// 建立Greetr物件
+var greeter2 = new Greetr();
+// 把方法放進陣列
+greeter2.on('greet',function(data){
+    console.log('greeter2 someone greeted: '+data);
+});
+
+// 從prototype拿到function greet
+greeter1.greet('Justin');
+// hello world (emit - event)
+// someone greeted (event listener)
+
+greeter2.greet('Hi there');

@@ -9,11 +9,14 @@ http.createServer(function(req,res){
     res.writeHead(200,{'Content-Type':'text/html'});
 
     // 加了utf-8後，html就成了String
-    var html = fs.readFileSync(__dirname+'/index.html','utf-8');
-    var message = "Hello World...";
-    html = html.replace('{message}',message);
+    // var html = fs.readFileSync(__dirname+'/index.html','utf-8');
+    // var message = "Hello World...";
+    // html = html.replace('{message}',message);
+    // res.end(html);
 
-    res.end(html);
+    // send data a chunk of a time
+    // get data from a readable stream and send it to a writable stream
+    fs.createReadStream(__dirname+'/index.html').pipe(res);
 
 }).listen(1337,'127.0.0.1');
 // localhost:1337 這個program就會收到(server object.listen())
